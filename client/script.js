@@ -38,11 +38,31 @@ function update(msgs) {
   
     ul.innerHTML = '';
 
-    msgs.sort((a, b) => b.date - a.date);
+    msgs.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     msgs.forEach(item => {
         const li = document.createElement('li');
-        li.textContent = item.pseudo + " : " + item.msg;
+        const messageDiv = document.createElement('div');
+        messageDiv.textContent = item.msg;
+        messageDiv.classList.add('message-content');
+        
+        const pseudoText = document.createElement('p');
+        pseudoText.textContent = item.pseudo;
+        pseudoText.classList.add('message-pseudo');
+
+        const dateText = document.createElement('p');
+        const dateObj = new Date(item.date);
+        const formattedDate = `${dateObj.getDate().toString().padStart(2, '0')}/${(dateObj.getMonth() + 1).toString().padStart(2, '0')}/${dateObj.getFullYear()} at ${dateObj.getHours().toString().padStart(2, '0')}:${dateObj.getMinutes().toString().padStart(2, '0')}`;
+        dateText.textContent = formattedDate;
+        dateText.classList.add('message-date');
+
+        const dataDiv = document.createElement('div');
+        dataDiv.classList.add('message-data');
+        dataDiv.appendChild(pseudoText);
+        dataDiv.appendChild(dateText);
+        
+        li.appendChild(dataDiv);
+        li.appendChild(messageDiv);
         ul.appendChild(li);
     });
 
@@ -68,17 +88,30 @@ function update(msgs) {
 
 function sendMessage() {
     const textarea = document.querySelector('textarea');
-    const msg = textarea.value;
+    let msg = "";
+    let pseudo = "";
+
+    if ( textarea.value.includes("-") && textarea.value.split('-').length == 2) {
+        msg = textarea.value.split('-')[0].trim();
+        pseudo = textarea.value.split('-')[1] == "" ? "anonymous" : textarea.value.split('-')[1].trim();
+    }
+
     
-    fetch(`${microservice_url}/msg/post?msg=${msg}&pseudo=me`, {
+    fetch(`${microservice_url}/msg/post?msg=${msg}&pseudo=${pseudo}`, {
         method: 'GET',
     })
     .then(function(response) {
-        if (response.status != 200) {
-            throw new Error("Error");
+        if (response.status == 200) {
+            data = response.json();
+            if (data == -1) {
+                throw new Error("Error post message");
+            }
+            else {
+                window.location.reload();
+            }
         }
         else {
-            window.location.reload();
+            throw new Error("Error");
         }
     })
 }
