@@ -67,3 +67,5 @@ Les messages sont des objets JSON présentés de la sorte :
 - [Server](https://archi-applicative-server.onrender.com/)
 
 ⚠️ Le serveur et le client étant déployés gratuitement sur Render, leur chargement peut prendre jusqu'à 50 secondes. Si vous ne voyez pas les messages s'afficher lors de la première visite, cela est normal.
+
+> Arnaud PY - Étudiant ASI de Centrale Supelec - 2024/2025
