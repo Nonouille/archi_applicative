@@ -68,8 +68,9 @@ function update(msgs) {
 
     // Attach delete functionality after updating the list
     ul.addEventListener('click', function(event) {
-        if (event.target.tagName === 'LI') {
-            const index = Array.from(ul.children).indexOf(event.target);
+        if (event.target.classList.contains('message-content')) {
+            const li = event.target.closest('li');
+            const index = Array.from(ul.children).indexOf(li);
 
             fetch(`${microservice_url}/msg/del/${index}`, {
                 method: 'GET',
