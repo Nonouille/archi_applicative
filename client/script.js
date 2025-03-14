@@ -16,7 +16,7 @@
 
 // console.log(applique(function (n) { return (n + 1); }, [1, 2, 3, 4, 5, 6]));
 
-microservice_url = 'https://f9b63721-9ee8-4576-b2ef-f0074e8d985f-00-243contaq2da5.riker.replit.dev';
+microservice_url = 'https://archi-applicative-server.onrender.com';
 
 // Messages data structure with metadata (pseudo, date)
 let msgs = [
