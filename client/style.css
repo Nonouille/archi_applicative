@@ -59,6 +59,11 @@ li {
     margin: 5px 0 5px 20px;
 }
 
+li:hover {
+    cursor: pointer;
+    color: #e9523b;
+}
+
 .form {
     display: flex;
     justify-content: center;

@@ -45,6 +45,25 @@ function update(msgs) {
         li.textContent = item.pseudo + " : " + item.msg;
         ul.appendChild(li);
     });
+
+    // Attach delete functionality after updating the list
+    ul.addEventListener('click', function(event) {
+        if (event.target.tagName === 'LI') {
+            const index = Array.from(ul.children).indexOf(event.target);
+
+            fetch(`${microservice_url}/msg/del/${index}`, {
+                method: 'GET',
+            })
+            .then(function(response) {
+                if (response.status != 200) {
+                    throw new Error("Error");
+                }
+                else {
+                    window.location.reload();
+                }
+            })
+        }
+    });
 }
 
 function sendMessage() {
@@ -71,4 +90,3 @@ fetch(`${microservice_url}/msg/getAll`)
 .then(function(data) {
   update(data);
 });
-
