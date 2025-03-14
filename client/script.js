@@ -123,3 +123,11 @@ fetch(`${microservice_url}/msg/getAll`)
 .then(function(data) {
   update(data);
 });
+
+fetch(`${microservice_url}/msg/nber`)
+.then(function(response) {
+  return response.json();
+})
+.then(function(data) {
+    document.getElementById('nber').innerHTML = "Recent messages (" + data + ")";
+});
