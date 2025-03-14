@@ -67,8 +67,13 @@ app.get('/msg/post*', function (req, res) {
     message = unescape(req.query.msg);
     pseudo = unescape(req.query.pseudo);
     date = new Date();
-    index = allMsgs.push({"msg": message, "pseudo": pseudo, "date": date});
-    res.json(index)
+    if (message != "" && pseudo != "") {
+        index = allMsgs.push({"msg": message, "pseudo": pseudo, "date": date});
+        res.json(index)
+    }
+    else {
+        res.json(-1);
+    }
 });
 
 app.get('/msg/get/*', function (req, res) {
